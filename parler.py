@@ -28,6 +28,7 @@ def read_parler_warc(warc_file):
                     continue
                 
                 req_time = record.rec_headers.get_header('WARC-Date')
+                # BeautifulSoup attribute extraction via https://github.com/sbooeshaghi/parlertrick
                 soup = BeautifulSoup(record.content_stream().read(), 'html.parser')
                 
                 try:
