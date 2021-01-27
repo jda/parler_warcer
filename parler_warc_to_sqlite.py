@@ -4,6 +4,7 @@ import parler
 from glob import glob
 import sqlite3
 import logging
+from tqdm import tqdm
 
 logging.basicConfig(encoding='utf-8', level=logging.DEBUG,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -44,8 +45,9 @@ def gen_db_from_warc(warcdir, dbfile):
     db = sqlite3.connect(dbfile)
     prep_db(db)
 
-    for warc in warcs:
-        logging.info(f"reading {warc}")
+    pbar = tqdm(warcs)
+    for warc in pbar:
+        pbar.set_description(f"processing {warc}")
         db.executemany(
             """INSERT INTO posts VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ON CONFLICT(pid) DO UPDATE SET 
