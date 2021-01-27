@@ -34,8 +34,9 @@ req_time string not null
     dbh.execute("PRAGMA journal_mode = OFF")
 
 def glob_warc(dir):
-    in_warcs = glob(f"{dir}/*.warc.gz", recursive=True)
-    return in_warcs
+    gz_in_warcs = glob(f"{dir}/*.warc.gz", recursive=True)
+    plain_in_warcs = glob(f"{dir}/*.warc", recursive=True)
+    return gz_in_warcs + plain_in_warcs
 
 @click.command()
 @click.argument('warcdir')
