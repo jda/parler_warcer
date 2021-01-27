@@ -52,7 +52,8 @@ ON CONFLICT(pid) DO UPDATE SET
 orig_reltime=excluded.orig_reltime, 
 post_time=excluded.post_time,
 impressions=excluded.impressions,
-req_time=excluded.req_time;
+req_time=excluded.req_time
+WHERE excluded.impressions>impressions;
 """,
             parler.read_parler_warc(warc)
         )
